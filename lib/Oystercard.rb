@@ -1,13 +1,13 @@
 class Oystercard
 
     attr_reader :balance, :total
-    attr_accessor :limit
+    attr_accessor :limit, :status
 
     DEFAULT = 90
     MIN = 1
     def initialize(limit = DEFAULT, min = MIN)
         @balance = 0
-        @total
+        @total = 0
         @limit = limit
         @status
         @min = min
@@ -32,7 +32,8 @@ class Oystercard
         status = true
     end
 
-    def touch_out
+    def touch_out(num)
+        deduct(num)
         status = false
     end
 end

@@ -21,11 +21,18 @@ describe Oystercard do
      end
 
      it 'tells you you are finished when you touch out' do
-        expect(subject.touch_out).to be(false)
+        expect(subject.touch_out(0)).to be(false)
      end
 
      it 'throws an error when below 1 pound' do
        expect{oystercard.touch_in(0)}.to raise_error("not enough funds")
+     end
+
+     it 'deducts from balance on touch out' do
+        oystercard.top_up(6)
+        oystercard.status = true
+        oystercard.touch_out(4)
+        expect(oystercard.total).to eq(2)
      end
 
 end
