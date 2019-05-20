@@ -6,4 +6,10 @@ describe Oystercard do
         oystercard.balance
         expect(oystercard.balance).to eq(0)
     end
+
+    it 'can be topped up' do
+      oystercard = Oystercard.new
+      oystercard.top_up(50)
+      expect(oystercard.top_up(50)).to eq(50)
+    end
 end
