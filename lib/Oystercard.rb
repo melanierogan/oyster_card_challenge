@@ -8,7 +8,7 @@ class Oystercard
         @balance = 0
         @total
         @limit = limit
-
+        @status
     end
 
     def top_up(num)
@@ -18,5 +18,17 @@ class Oystercard
 
     def deduct(num)
       total = balance - num
+    end
+
+    def in_journey
+      status = true
+    end
+
+    def touch_in
+        status = true
+    end
+
+    def touch_out
+        status = false
     end
 end
