@@ -4,11 +4,13 @@ class Oystercard
     attr_accessor :limit
 
     DEFAULT = 90
-    def initialize(limit = DEFAULT)
+    MIN = 1
+    def initialize(limit = DEFAULT, min = MIN)
         @balance = 0
         @total
         @limit = limit
         @status
+        @min = min
     end
 
     def top_up(num)
@@ -24,7 +26,9 @@ class Oystercard
       status = true
     end
 
-    def touch_in
+    def touch_in(num)
+        if num < @min then raise("not enough funds")
+        end
         status = true
     end
 
