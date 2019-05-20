@@ -7,9 +7,8 @@ class Oystercard
     end
 
     def top_up(num)
-      num = 50
+      balance + num
     end
-    # def balance
-    #     return 0
-    # end
+
+
 end
