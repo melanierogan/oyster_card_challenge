@@ -38,14 +38,14 @@ describe Oystercard do
         expect(oystercard.balance).to eq(2)
      end
 
-    #  it 'stores station at touch in' do
-    #   oystercard.top_up(10)
-    #   expect(oystercard).to respond_to(:touch_in).with(2).arguments
-    #  end
+     it 'stores station at touch in' do
+      oystercard.top_up(10)
+      expect(oystercard).to respond_to(:touch_in).with(2).arguments
+     end
 
-#      it 'stores empty list of stations' do
-#       expect(oystercard.journeys).to eq([])
-#      end
+     it 'stores empty list of stations' do
+      expect(oystercard.journeys).to eq([])
+     end
 #
 #      it 'stores the journey (entry and exit)' do
 #       oystercard.touch_in(1, "Farringdon")

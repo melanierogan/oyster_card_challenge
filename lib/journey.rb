@@ -1,20 +1,19 @@
 class Journey
 
-  attr_reader :journeys
+  attr_reader :start_station
 
-  def initialize
-    @journeys = []
+  def initialize(start_station, oystercard)
+    @start_station = start_station
+    @oystercard = oystercard
   end
 
   def in_journey?
     @entry_station != nil
   end
 
-  def touch_out(num, station)
-      deduct(num)
-      @exit_station = station
-      @journey = { @entry_station => @exit_station }
-      @entry_station = nil
+  def end_station
+    @oystercard.exit_station
   end
+
 
 end
