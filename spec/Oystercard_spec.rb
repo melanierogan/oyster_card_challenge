@@ -3,6 +3,7 @@ require './lib/Oystercard'
 describe Oystercard do
 
     let (:oystercard) { Oystercard.new }
+    let (:station) { double(:station) }
 
     it 'gives you a balance of 0' do
         oystercard.balance
@@ -13,19 +14,21 @@ describe Oystercard do
     # end
 
     it 'tells you you are in journey when card is in use' do
-       expect(subject.in_journey).to be true
+      oystercard.touch_in(1, station)
+      expect(oystercard.in_journey?).to be true
     end
 
-    it 'tells you you are in journey when you touch in' do
-        expect(subject.touch_in(Oystercard::MIN)).to be(true)
-     end
+    # it 'tells you you are in journey when you touch in' do
+    #     expect(subject.touch_in(Oystercard::MIN, station)).to be(true)
+    #  end
 
      it 'tells you you are finished when you touch out' do
-        expect(subject.touch_out(0)).to be(false)
+      subject.touch_out(0)
+      expect(oystercard.in_journey?).to be(false)
      end
 
      it 'throws an error when below 1 pound' do
-       expect{oystercard.touch_in(0)}.to raise_error("not enough funds")
+       expect{oystercard.touch_in(0,station)}.to raise_error("not enough funds")
      end
 
      it 'deducts from balance on touch out' do
@@ -34,6 +37,11 @@ describe Oystercard do
         oystercard.touch_out(4)
         expect(oystercard.balance).to eq(2)
      end
+
+     it 'stores station at touch in' do 
+      oystercard.top_up(10)
+      expect(oystercard).to respond_to(:touch_in).with(2).arguments
+     end 
 
 end
 
