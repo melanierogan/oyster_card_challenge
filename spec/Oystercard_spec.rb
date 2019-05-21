@@ -8,9 +8,9 @@ describe Oystercard do
         oystercard.balance
         expect(oystercard.balance).to eq(0)
     end
-    it 'can deduct fare from oystercard' do
-      expect(oystercard.deduct(10)).to eq(-10)
-    end
+    # it 'can deduct fare from oystercard' do
+    #   expect(oystercard.deduct(10)).to eq(-10)
+    # end
 
     it 'tells you you are in journey when card is in use' do
        expect(subject.in_journey).to be true
@@ -30,9 +30,9 @@ describe Oystercard do
 
      it 'deducts from balance on touch out' do
         oystercard.top_up(6)
-        oystercard.status = true
+        # oystercard.status = true
         oystercard.touch_out(4)
-        expect(oystercard.total).to eq(2)
+        expect(oystercard.balance).to eq(2)
      end
 
 end
@@ -41,7 +41,6 @@ describe "top_up" do
     let (:oystercard) { Oystercard.new }
 
     it 'can be topped up' do
-        oystercard.top_up(50)
         expect(oystercard.top_up(50)).to eq(50)
       end
 
