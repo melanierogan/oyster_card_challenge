@@ -30,9 +30,9 @@ describe Oystercard do
 
      it 'deducts from balance on touch out' do
         oystercard.top_up(6)
-        oystercard.status = true
+        # oystercard.status = true
         oystercard.touch_out(4)
-        expect(oystercard.total).to eq(2)
+        expect(oystercard.balance).to eq(2)
      end
 
 end
