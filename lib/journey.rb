@@ -7,9 +7,9 @@ class Journey
     @oystercard = oystercard
   end
 
-  def in_journey?
-    @entry_station != nil
-  end
+  # def in_journey?
+  #   @entry_station != nil
+  # end
 
   def end_station
     @oystercard.exit_station

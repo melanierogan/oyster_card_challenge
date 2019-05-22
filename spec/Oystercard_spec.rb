@@ -22,10 +22,10 @@ describe Oystercard do
     #     expect(subject.touch_in(Oystercard::MIN, station)).to be(true)
     #  end
 
-     # it 'tells you you are finished when you touch out' do
-     #  subject.touch_out(0, station)
-     #  expect(oystercard.in_journey?).to be(false)
-     # end
+     it 'tells you you are finished when you touch out' do
+      subject.touch_out(0, station)
+      expect(oystercard.in_journey?).to be(false)
+     end
 
      it 'throws an error when below 1 pound' do
        expect{oystercard.touch_in(0,station)}.to raise_error("not enough funds")
@@ -47,11 +47,11 @@ describe Oystercard do
       expect(oystercard.journeys).to eq([])
      end
 #
-#      it 'stores the journey (entry and exit)' do
-#       oystercard.touch_in(1, "Farringdon")
-#       oystercard.touch_out(1, "Kings Cross")
-#       expect(oystercard.journey).to include("Farringdon" => "Kings Cross")
-#      end
+     it 'stores the journey (entry and exit)' do
+      oystercard.touch_in(1, "Farringdon")
+      oystercard.touch_out(1, "Kings Cross")
+      expect(oystercard.journey).to include("Farringdon" => "Kings Cross")
+     end
  end
 
 describe "top_up" do

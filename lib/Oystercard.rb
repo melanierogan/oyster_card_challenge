@@ -17,10 +17,10 @@ class Oystercard
       @balance > limit ? raise("maximum balance reached #{limit}!") : @balance
     end
 
-    # def in_journey?
-    #   @entry_station != nil
-    # end
-    #
+    def in_journey?
+      @entry_station != nil
+    end
+    
     def touch_in(num, station)
         if num < @min then raise("not enough funds")
         end
