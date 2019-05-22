@@ -1,15 +1,19 @@
+
+
 class Oystercard
 
-    attr_reader :balance, :entry_station, :journey, :journeys, :exit_station
+    attr_reader :balance, :entry_station, :exit_station, :journey
     attr_accessor :limit
 
     DEFAULT = 90
     MIN = 1
-    def initialize(limit = DEFAULT, min = MIN)
+    PENALTY = 6
+    def initialize(limit = DEFAULT, min = MIN, penalty = PENALTY)
         @balance = 0
         @limit = limit
         @min = min
-        @journeys = []
+        @penalty = penalty
+       
     end
 
     def top_up(num)
@@ -21,16 +25,19 @@ class Oystercard
       @entry_station != nil
     end
     
-    def touch_in(num, station)
-        if num < @min then raise("not enough funds")
+    def touch_in(station)
+        if @balance < @min then raise("not enough funds")
         end
         @entry_station = station
+        # Journey.new(@entry_station, ) can we create a journey, should we?
     end
 
-    def touch_out(num, station)
-        deduct(num)
+    def touch_out(station)
         @exit_station = station
-        @journey = { @entry_station => @exit_station }
+        if in_journey?
+        deduct(journey.fare)
+        # the above does not work because we need to create a journey in line 32
+        end
         @entry_station = nil
     end
 
