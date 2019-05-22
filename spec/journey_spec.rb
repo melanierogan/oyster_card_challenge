@@ -3,8 +3,8 @@ require 'Oystercard'
 
 
 describe Journey do
-  let(:oystercard){double(:oystercard, :min => 1, :penalty => 6, :entry_station => "King's Cross", :exit_station => "Shoreditch")}
-  let(:journey){Journey.new("start_station", oystercard)}
+  let(:oystercard){double(:oystercard, :min => 1, :penalty => 6, :touch_in => "King's Cross", :touch_out => "Shoreditch")}
+  let(:journey){Journey.new("start_station")}
   let(:station){double(:station)}
 
   it 'gives an entry station on initialize' do
@@ -16,7 +16,8 @@ describe Journey do
   end
 
   it 'gets the end of the journey' do
-    expect(journey.end_station).to eq("Shoreditch")
+    end_station = oystercard.touch_out
+    expect(end_station).to eq("Shoreditch")
   end
 
   it 'stores empty list of stations' do
@@ -25,8 +26,10 @@ describe Journey do
 
    it 'stores the journey' do
     # journey.beginning
+    start_station = oystercard.touch_in
+    exit_station = oystercard.touch_out
     journey.journey_history
-    expect(journey.journeys).to include("start_station" => "Shoreditch")
+    expect(journey.journeys).to include("King's Cross" => "Shoreditch")
    end
 
    it 'has a fare method' do 
@@ -34,13 +37,14 @@ describe Journey do
    end
 
    describe 'fare' do
-    it 'has a minimum fare' do 
-      expect(journey.fare(false)).to eq(1)
+    it 'charges minimum fare' do 
+      @is_penalty = false
+      expect(journey.fare).to eq(1)
     end
 
-    it 'has a penalty fare' do
-      expect(journey.fare(true)).to eq(6)
-    end
+    # it 'has a penalty fare' do
+    #   expect(journey.fare).to eq(6)
+    # end
 
    end
 

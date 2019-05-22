@@ -15,7 +15,7 @@ describe Oystercard do
     #  end
 
      it 'tells you you are finished when you touch out' do
-      subject.touch_out(station)
+      oystercard.touch_out(station)
       expect(oystercard.in_journey?).to be(false)
      end
 
@@ -25,9 +25,18 @@ describe Oystercard do
 
      it 'deducts from balance on touch out' do
         oystercard.top_up(6)
+        oystercard.touch_in(station)
         # oystercard.status = true
         oystercard.touch_out(station)
         expect(oystercard.balance).to eq(5)
+     end
+
+     it 'deducts a penalty if not touched in' do
+        # puts "***********"
+        # puts oystercard.journey.is_penalty
+        oystercard.top_up(6)
+        oystercard.touch_out(station)
+        expect(oystercard.balance).to eq(0)
      end
 
      it 'stores station at touch in' do
