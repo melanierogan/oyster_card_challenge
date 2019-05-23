@@ -3,31 +3,49 @@ require 'Oystercard'
 
 
 describe Journey do
-  let(:oystercard){double(:oystercard, :exit_station => "Shoreditch")}
-  let(:journey){Journey.new("start_station", oystercard)}
+  let(:oystercard){double(:oystercard, :min => 1, :penalty => 6, :touch_in => "King's Cross", :touch_out => "Shoreditch")}
+  let(:journey){Journey.new("start_station")}
   let(:station){double(:station)}
 
-
-  it 'updates in journey to be false when you touch out' do
-   journey.touch_out(0, station)
-   expect(journey.in_journey?).to be(false)
-  end
-
-  it 'stores the journey (entry and exit)' do
-   journey.touch_in(1, "Farringdon")
-   journey.touch_out(1, "Kings Cross")
-   expect(journey.journey).to include("Farringdon" => "Kings Cross")
-  end
-
   it 'gives an entry station on initialize' do
-    journey = Journey.new("King's Cross", oystercard)
-    expect(journey.start_station).to eq("King's Cross")
+    expect(journey.start_station).to eq("start_station")
   end
 
-  it 'gives an end station when card touches out' do
-      oystercard = Oystercard.new
-      oystercard.touch_out(1, "Shoreditch")
-    expect(journey.end_station).to eq("Shoreditch")
+  it 'gets the start of the journey' do
+    expect(journey.beginning).to eq("start_station")
   end
+
+  it 'gets the end of the journey' do
+    end_station = oystercard.touch_out
+    expect(end_station).to eq("Shoreditch")
+  end
+
+  it 'stores empty list of stations' do
+    expect(journey.journeys).to eq([])
+   end
+
+   it 'stores the journey' do
+    # journey.beginning
+    start_station = oystercard.touch_in
+    exit_station = oystercard.touch_out
+    journey.journey_history
+    expect(journey.journeys).to include("King's Cross" => "Shoreditch")
+   end
+
+   it 'has a fare method' do 
+    expect(journey).to respond_to(:fare)
+   end
+
+   describe 'fare' do
+    it 'charges minimum fare' do 
+      @is_penalty = false
+      expect(journey.fare).to eq(1)
+    end
+
+    # it 'has a penalty fare' do
+    #   expect(journey.fare).to eq(6)
+    # end
+
+   end
 
 end
